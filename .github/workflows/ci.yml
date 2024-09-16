@@ -9,7 +9,7 @@ jobs:
 
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
 
     steps:
@@ -24,3 +24,5 @@ jobs:
       run: docker build -t supdude/cicd-pipeline .
     - name: Push to Dockerhub
       run: docker push supdude/cicd-pipeline:latest
+    - name: Pull Docker image
+      run: sudo docker pull supdude/cicd-pipeline:latest
