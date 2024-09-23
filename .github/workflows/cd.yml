@@ -1,17 +1,28 @@
 name: CD Pipeline
 
-on:
-  workflow_run:
-    workflows: ["CI Pipeline"]
-    types:
-      - completed
+on: 
+  workflow_dispatch:
+    inputs:
+      runner_label:
+        description: 'Runner label'
+        type: string
+        default: 'self-hosted'
+    #   hub-url:
+    #     description: 'Test scenario tags'
+    #     default: 
+  workflow_call:
+    inputs:
+      runner_label:
+        description: 'runner_name'
+        type: string
+        default: "self-hosted"
 
 
 jobs:
 
   build:
 
-    runs-on: cd1
+    runs-on: ${{inputs.runner_label}}
 
 env:
   # BUCKET_NAME : "BUCKET-NAME"
