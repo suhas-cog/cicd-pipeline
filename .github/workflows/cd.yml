@@ -12,6 +12,27 @@ jobs:
   build:
 
     runs-on: cd1
+
+env:
+  # BUCKET_NAME : "BUCKET-NAME"
+  AWS_REGION : "ap-south-1"
+  AWS_ACCOUNT: 739275441922
+# permission can be added at job level or workflow level
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+jobs:
+  runAWSCommands:
+    runs-on: ubuntu-latest
+  # This is required for actions/checkout
+    steps:
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::739275441922:role/2195618-GITHUB-OIDC-ROLE
+          # role-session-name: samplerolesession
+          aws-region: ${{ env.AWS_REGION }}
+
     
     steps:
     - uses: actions/checkout@v3
