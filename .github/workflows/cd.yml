@@ -1,49 +1,17 @@
 name: CD Pipeline
 
-on: 
-  workflow_dispatch:
-    inputs:
-      runner_label:
-        description: 'Runner label'
-        type: string
-        default: 'self-hosted'
-    #   hub-url:
-    #     description: 'Test scenario tags'
-    #     default: 
-  workflow_call:
-    inputs:
-      runner_label:
-        description: 'runner_name'
-        type: string
-        default: "self-hosted"
+on:
+  workflow_run:
+    workflows: ["CI Pipeline"]
+    types:
+      - completed
 
 
 jobs:
 
   build:
 
-    runs-on: ${{inputs.runner_label}}
-
-env:
-  # BUCKET_NAME : "BUCKET-NAME"
-  AWS_REGION : "ap-south-1"
-  AWS_ACCOUNT: 739275441922
-# permission can be added at job level or workflow level
-permissions:
-  id-token: write   # This is required for requesting the JWT
-  contents: read    # This is required for actions/checkout
-jobs:
-  runAWSCommands:
-    runs-on: ubuntu-latest
-  # This is required for actions/checkout
-    steps:
-      - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          role-to-assume: arn:aws:iam::739275441922:role/2195618-GITHUB-OIDC-ROLE
-          # role-session-name: samplerolesession
-          aws-region: ${{ env.AWS_REGION }}
-
+    runs-on: cd1
     
     steps:
     - uses: actions/checkout@v3
