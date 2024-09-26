@@ -11,7 +11,7 @@ jobs:
 
   build:
 
-    runs-on: cd1
+    runs-on: TR-GitHub-ECS
     
     steps:
     - uses: actions/checkout@v3
@@ -23,7 +23,6 @@ jobs:
 
     - name: Pull Docker image
       run: sudo docker pull supdude/cicd-pipeline:latest
-
 
     #- name: Delete Old docker container
     #  run: sudo docker rm -f cicd-pipeline-container || true
